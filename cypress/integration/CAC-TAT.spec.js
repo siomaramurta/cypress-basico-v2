@@ -212,8 +212,35 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
       cy.get('span[class="success"]').should('be.visible', "Mensagem enviada com sucesso.")
   })
+    it('seleciona um produto (YouTube) por seu texto', function () {
+      const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
 
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
 
+      cy.get('select[id="product"]').select('YouTube').should('have.value', 'youtube')
+
+      cy.get('.success').should('be.visible')
+    })
+
+    it('seleciona um produto (Mentoria) por seu valor', function () {
+      const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
+
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
+
+      cy.get('select[id="product"]').select('mentoria').should('have.value', 'mentoria')
+
+      cy.get('.success').should('be.visible')
+    })
+
+    it('seleciona um produto (Blog) por seu índice', function () {
+      const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
+
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
+
+      cy.get('select[id="product"]').select(1).should('have.value', 'blog')
+
+      cy.get('.success').should('be.visible')
+    })
 
   })
   
