@@ -122,7 +122,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.get('.button[type="submit"]').click() 
 
       cy.get('span[class="error"]').should('be.visible', "Valide os campos obrigatórios!")
-  })
+    })
 
     it('preenche os campos obrigatórios e envia o formulário', function() {
       const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
@@ -165,14 +165,14 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.get('.button[type="submit"]').click() 
 
       cy.get('span[class="error"]').should('be.visible', "Valide os campos obrigatórios!")
-  })
+    })
 
 
     it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function() {
       cy.get('.button[type="submit"]').click() 
 
       cy.get('span[class="error"]').should('be.visible', "Valide os campos obrigatórios!")
-  })
+    })
 
     it('envia o formuário com sucesso usando um comando customizado', function() {
 
@@ -183,7 +183,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.get('span[class="success"]').should('be.visible', "Mensagem enviada com sucesso.")
       //ou cy.get('.success').should('be.visible')
 
-  })
+    })
 
     it('preenche os campos obrigatórios e envia o formulário', function() {
       const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
@@ -211,13 +211,14 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.contains('button', 'Enviar').click() 
 
       cy.get('span[class="success"]').should('be.visible', "Mensagem enviada com sucesso.")
-  })
+    })
+
     it('seleciona um produto (YouTube) por seu texto', function () {
       const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
 
-      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
-
       cy.get('select[id="product"]').select('YouTube').should('have.value', 'youtube')
+
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
 
       cy.get('.success').should('be.visible')
     })
@@ -225,9 +226,9 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     it('seleciona um produto (Mentoria) por seu valor', function () {
       const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
 
-      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
-
       cy.get('select[id="product"]').select('mentoria').should('have.value', 'mentoria')
+
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
 
       cy.get('.success').should('be.visible')
     })
@@ -235,12 +236,36 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     it('seleciona um produto (Blog) por seu índice', function () {
       const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
 
-      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
-
       cy.get('select[id="product"]').select(1).should('have.value', 'blog')
+
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
 
       cy.get('.success').should('be.visible')
     })
 
-  })
+    it('marca o tipo de atendimento "Feedback"', function () {
+      const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
+
+      cy.get('[type="radio"]')
+        .check('feedback')
+        .should('have.value', 'feedback')
+
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
+
+      cy.get('.success').should('be.visible')
+    })
   
+    it('marca cada tipo de atendimento', function () {
+      const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
+
+      cy.get('input[type="radio"]')
+        .should('have.length', 3)
+        .each(function($radio) {
+          cy.wrap($radio).check()
+          cy.wrap($radio).should('be.checked')
+        })
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
+
+      cy.get('.success').should('be.visible')
+    })
+  })
