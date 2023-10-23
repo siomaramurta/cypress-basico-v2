@@ -1,1 +1,0 @@
-TesteCypress deveria ser o nome da pasta
