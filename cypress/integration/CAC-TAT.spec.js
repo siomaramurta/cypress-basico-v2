@@ -268,4 +268,29 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
       cy.get('.success').should('be.visible')
     })
+
+    it.only('marca ambos checkboxes, depois desmarca o último', function () {
+      cy.get('input[type="checkbox"]')
+        .as('checkboxes')
+        .check()
+        .should('be.checked')
+      
+        cy.get('input[type="checkbox"]').last().uncheck()
+          .should('not.be.checked')
+
+        cy.get('input[type="checkbox"]').first().should('be.checked')
+    })
+
+    it.only('refazendo - exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
+      const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
+      
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
+
+      cy.get('input[id="phone-checkbox"]').check()
+      .should('be.checked')
+
+      cy.get('.button[type="submit"]').click() 
+
+      cy.get('[class="error"]').should('be.visible')
+    })
   })
