@@ -328,7 +328,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.get('.success').should('be.visible')
     })
 
-    it.only('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function() {
+    it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function() {
       const longText = 'Olá! Tudo bem? Estou com dificuldades no exercício em anexo. Poderiam me auxiliar, por favor? Muito obrigada!'
       
       cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
@@ -336,18 +336,41 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.fixture('example.json').as('sample')
       cy.get('input[type=file]')
         .should('not.have.value')
-        .selectFile('@sample', { action: 'drag-drop' })
-        .invoke('val').should('contain', 'example.json')
+        .selectFile('@sample')
+        .should(function($input) {
+          expect($input[0].files[0].name).to.equal('example.json')
+        })
     
       cy.get('.button[type="submit"]').click() 
 
       cy.get('.success').should('be.visible')
     })
 
+    it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function() {
+      cy.get('a[href="privacy.html"]').should('have.attr', 'target', '_blank')
+    })
 
+    it('acessa a página da política de privacidade removendo o target e então clicando no link', function() {
+      cy.get('a[href="privacy.html"]').invoke('removeAttr', 'target')
+        .click()
+    })
 
+    it('testa a página da política de privacidade de forma independente - 1', function() {
+      cy.get('a[href="privacy.html"]').invoke('removeAttr', 'target')
+        .click()
+      
+      cy.contains('CAC TAT - Política de privacidade').should('be.visible')
 
-
-
-
+    })
   })
+
+  describe('Central de Atendimento ao Cliente TAT', function() {
+
+    before(() => {
+      cy.visit('./src/privacy.html')
+    })
+    it('testa a página da política de privacidade de forma independente - 2', function() {
+      cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT - Política de privacidade')
+      })
+    
+})
