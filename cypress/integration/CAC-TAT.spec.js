@@ -269,7 +269,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.get('.success').should('be.visible')
     })
 
-    it.only('marca ambos checkboxes, depois desmarca o último', function () {
+    it('marca ambos checkboxes, depois desmarca o último', function () {
       cy.get('input[type="checkbox"]')
         .as('checkboxes')
         .check()
@@ -281,7 +281,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('input[type="checkbox"]').first().should('be.checked')
     })
 
-    it.only('refazendo - exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
+    it('refazendo - exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
       const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
       
       cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
@@ -293,4 +293,61 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
       cy.get('[class="error"]').should('be.visible')
     })
+
+    it('seleciona um arquivo da pasta fixtures', function() {
+      const longText = 'Olá! Tudo bem? Estou com dificuldades no exercício em anexo. Poderiam me auxiliar, por favor? Muito obrigada!'
+      
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
+
+      cy.get('input[type=file]')
+        .should('not.have.value')
+        .selectFile('C:/Users/user/cypress-basico-v2/cypress/fixtures/example.json')
+        .should(function($input) {
+          expect($input[0].files[0].name).to.equal('example.json')
+        })
+    
+      cy.get('.button[type="submit"]').click() 
+
+      cy.get('.success').should('be.visible')
+    })
+
+    it('seleciona um arquivo simulando um drag-and-drop', function() {
+      const longText = 'Olá! Tudo bem? Estou com dificuldades no exercício em anexo. Poderiam me auxiliar, por favor? Muito obrigada!'
+      
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
+
+      cy.get('input[type=file]')
+        .should('not.have.value')
+        .selectFile('C:/Users/user/cypress-basico-v2/cypress/fixtures/example.json', { action: 'drag-drop' })
+        .should(function($input) {
+        expect($input[0].files[0].name).to.equal('example.json')
+      })
+    
+      cy.get('.button[type="submit"]').click() 
+
+      cy.get('.success').should('be.visible')
+    })
+
+    it.only('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function() {
+      const longText = 'Olá! Tudo bem? Estou com dificuldades no exercício em anexo. Poderiam me auxiliar, por favor? Muito obrigada!'
+      
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
+
+      cy.fixture('example.json').as('sample')
+      cy.get('input[type=file]')
+        .should('not.have.value')
+        .selectFile('@sample', { action: 'drag-drop' })
+        .invoke('val').should('contain', 'example.json')
+    
+      cy.get('.button[type="submit"]').click() 
+
+      cy.get('.success').should('be.visible')
+    })
+
+
+
+
+
+
+
   })
