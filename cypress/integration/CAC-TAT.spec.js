@@ -298,7 +298,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
       cy.get('input[type=file]')
         .should('not.have.value')
-        .selectFile('C:/Users/user/cypress-basico-v2/cypress/fixtures/example.json')
+        .selectFile('./cypress/fixtures/example.json')
         .should(function($input) {
           expect($input[0].files[0].name).to.equal('example.json')
         })
@@ -315,7 +315,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
       cy.get('input[type=file]')
         .should('not.have.value')
-        .selectFile('C:/Users/user/cypress-basico-v2/cypress/fixtures/example.json', { action: 'drag-drop' })
+        .selectFile('./cypress/fixtures/example.json', { action: 'drag-drop' })
         .should(function($input) {
         expect($input[0].files[0].name).to.equal('example.json')
       })
