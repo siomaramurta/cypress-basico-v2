@@ -100,6 +100,8 @@ O curso de Testes Automatizados com Cypress - Básico é projetado para ajudar p
 
 30. **Escrever a documentação do projeto**
 
+31. **Adicionar uma pipeline de integração contínua**
+
 
 ## Contribuições
 
