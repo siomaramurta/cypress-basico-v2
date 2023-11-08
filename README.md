@@ -108,6 +108,8 @@ O curso de Testes Automatizados com Cypress - Básico é projetado para ajudar p
 
 34. **Exibir e esconder as mensagens de sucesso e erro usando o .invoke'**
 
+35. **Preencher a area de texto usando o comando .invoke()**
+
 ## Contribuições
 
 Este repositório contém a resolução dos exercícios do curso de acordo com o que fui absorvendo. 
