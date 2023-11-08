@@ -112,6 +112,8 @@ O curso de Testes Automatizados com Cypress - Básico é projetado para ajudar p
 
 36. **Fazer uma request HTTP com cy.request()**
 
+37. **Desafio - Encontrar o gato escondido no código**
+
 ## Contribuições
 
 Este repositório contém a resolução dos exercícios do curso de acordo com o que fui absorvendo. 

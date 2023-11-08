@@ -437,6 +437,19 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         })
     })
     
+    it.only('encontrar o gato escondido no código', function() {
+      
+      cy.get('span[id="cat"]')
+        .invoke('show')
+        .should('be.visible')
+
+      cy.get('h1[id="title"]')
+        .invoke('text', 'CAT TAT')
+
+        cy.get('p[id="subtitle"]')
+        .invoke('text', 'I love CATS')
+    })
+
   })
 
   describe('Central de Atendimento ao Cliente TAT', function() {
