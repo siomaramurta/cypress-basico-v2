@@ -416,7 +416,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         .should('not.be.visible')
     })
 
-    it.only('preenche a area de texto usando o comando .invoke()', function() {
+    it('preenche a area de texto usando o comando .invoke()', function() {
 
       const longText2 = Cypress._.repeat('teste ', 50)
 
@@ -426,6 +426,17 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     })
 
+    it('faz uma requisição HTTP', function() {
+      
+      cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+        .should(function(resposta) {
+          const { status, statusText, body } = resposta
+          expect(status).to.equal(200)
+          expect(statusText).to.equal('OK')
+          expect(body).to.include('CAC TAT')
+        })
+    })
+    
   })
 
   describe('Central de Atendimento ao Cliente TAT', function() {
