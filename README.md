@@ -102,6 +102,10 @@ O curso de Testes Automatizados com Cypress - Básico é projetado para ajudar p
 
 31. **Adicionar uma pipeline de integração contínua**
 
+32. **Controlar o "relógio" do navegador com os comandos cy.clock() e cy.tick()**
+
+33. **Utilizar a funcionalidade Cypress._.times() - lodash**
+
 
 ## Contribuições
 
