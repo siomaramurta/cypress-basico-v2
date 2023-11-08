@@ -106,6 +106,7 @@ O curso de Testes Automatizados com Cypress - Básico é projetado para ajudar p
 
 33. **Utilizar a funcionalidade Cypress._.times() - lodash**
 
+34. **Exibir e esconder as mensagens de sucesso e erro usando o .invoke'**
 
 ## Contribuições
 
