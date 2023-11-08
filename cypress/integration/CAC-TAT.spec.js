@@ -361,6 +361,52 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.contains('CAC TAT - Política de privacidade').should('be.visible')
 
     })
+
+    it('envia o formuário com sucesso usando um comando customizado e para e avança o relógio do navegador', function() {
+
+      const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
+
+      cy.clock()
+
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
+
+      cy.get('.success').should('be.visible')
+
+      cy.tick(THREE_SECONDS_IN_MS)
+      //or cy.tick(3000)
+
+      cy.get('.success').should('not.be.visible')
+
+    })
+
+    it('refazendo parando e avançando o relógio do navegador - exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
+      const longText = 'Olá! Tudo bem? Estou com dificuldades para acessar o módulo X. Meu número de matrícula no curso é X0X0000XX. Poderiam me auxiliar, por favor? Muito obrigada!'
+
+      cy.clock()
+
+      cy.fillMandatoryFiledsAndSubmit('Siomara', 'Murta', 'siomara.murta@gmail.com', longText)
+
+      cy.get('input[id="phone-checkbox"]').check()
+      .should('be.checked')
+
+      cy.get('.button[type="submit"]').click() 
+
+      cy.get('[class="error"]').should('be.visible')
+
+      cy.tick(THREE_SECONDS_IN_MS)
+
+      cy.get('[class="error"]').should('not.be.visible')
+
+    })
+
+    it.only('exibe e esconde as mensagens de sucesso e erro usando o .invoke()', function() {
+      cy.get('a[href="privacy.html"]').invoke('removeAttr', 'target')
+        .click()
+      
+      cy.contains('CAC TAT - Política de privacidade').should('be.visible')
+
+    })
+
   })
 
   describe('Central de Atendimento ao Cliente TAT', function() {
